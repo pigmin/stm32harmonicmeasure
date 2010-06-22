@@ -24,20 +24,21 @@ vu32 ADC_DualConvertedValueTab[ADC_CHANNEL_NUM];
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
+void  DMA1_Init(void);
+void  ADC_Sample_Frequency_Set(u32 frequency);
 
 /*******************************************************************************
-* Function Name  : ADC_Init
-* Description    : Init ADC Input, DMA Channel1, and ADC peripheral
+* Function Name  : DMA1_Init
+* Description    : Init DMA1
 * Input          : - 
 *                  - 
 * Output         : None
 * Return         : None
 *******************************************************************************/
-void ADCInit( void )
+void  DMA1_Init(void)
 {
   DMA_InitTypeDef DMA_InitStructure;
-  ADC_InitTypeDef ADC_InitStructure;
-  
+
   /* Enable DMA Clock           */
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
     
@@ -57,33 +58,84 @@ void ADCInit( void )
   DMA_Init(DMA1_Channel1, &DMA_InitStructure);
   /* Enable DMA Channel1 */
   DMA_Cmd(DMA1_Channel1, ENABLE);
-   
-  
+}
+
+/*******************************************************************************
+* Function Name  : ADC_Sample_Frequency_Set
+* Description    : 据输入的频率设置，TIM2_CC2产生相应的频率
+* 用来控制ADC的采样，Frequency=1000000/(Prescaler+1)来产生
+* 因此有些频率计算不准确，一般频率为2或5的倍数才准确
+* 频率范围为16Hz~1000,000Hz
+* Input          : frequency 输入所需要的采样频率
+*                  - 
+* Output         : None
+* Return         : None
+*******************************************************************************/
+void  ADC_Sample_Frequency_Set(u32 frequency)
+{
+  TIM_Cmd(TIM2, DISABLE);//先停止TIM2时钟，以准备下面的设置
+  /* -----------------------------------------------------------------------
+  TIM2 配置: 产生TIM2_CC2时钟控制信号用于控制ADC采样
+  TIM2CLK = 72 MHz
+  TIM2 ARR Register = 35 => TIM3 Frequency = (TIM3 counter clock/(ARR + 1))/2
+  TIM2 Frequency = 1000 KHz.
+  ----------------------------------------------------------------------- */
+  /* Time base configuration */
+  TIM_TimeBaseStructure.TIM_Period = 35; //APR寄存器
+  TIM_TimeBaseStructure.TIM_Prescaler = 1000000/Frequency-1; //预分频值，用来调整频率，分频系数=1000khz/(prescaler+1)
+  TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+  TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+  TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
+  /* TIM_OCMode_Toggle Mode configuration: Channel2 */
+  TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_Toggle;
+  TIM_OCInitStructure.TIM_Channel = TIM_Channel_2;
+  TIM_OCInitStructure.TIM_Pulse = 35;
+  TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_Low;
+  TIM_OCInit(TIM2, &TIM_OCInitStructure);
+  //TIM_OC1PreloadConfig(TIM2, TIM_OCPreload_Enable);
+  /*---------------------------------------*/
+  //TIM_ARRPreloadConfig(TIM2, ENABLE);
+  /* TIM2 enable counter */
+  TIM_Cmd(TIM2, ENABLE);
+}
+/*******************************************************************************
+* Function Name  : ADC_Init
+* Description    : Init ADC Input, DMA Channel1, and ADC peripheral
+* Input          : - 
+*                  - 
+* Output         : None
+* Return         : None
+*******************************************************************************/
+void ADC_Init( void )
+{
+  ADC_InitTypeDef ADC_InitStructure;
+
+  DMA1_Init();
+
   /* ADC1 Configuration ------------------------------------------------------*/
-  ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;//ADC_Mode_RegSimult;
+  ADC_InitStructure.ADC_Mode = ADC_Mode_RegSimult;
   ADC_InitStructure.ADC_ScanConvMode = DISABLE;
-  ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
-  ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
+  ADC_InitStructure.ADC_ContinuousConvMode = DISABLE;
+  ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_T2_CC2;
   ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
   ADC_InitStructure.ADC_NbrOfChannel = 1;
   ADC_Init(ADC1, &ADC_InitStructure);
 
   ADC_RegularChannelConfig(ADC1, ADC_Channel_16,   1, ADC_SampleTime_239Cycles5);
-     
   
   /* ADC2配置 */
-  ADC_InitStructure.ADC_Mode  = ADC_Mode_Independent;//ADC_Mode_RegSimult;
+  ADC_InitStructure.ADC_Mode  = ADC_Mode_RegSimult;
   ADC_InitStructure.ADC_ScanConvMode = DISABLE;
-  ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
-  ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
+  ADC_InitStructure.ADC_ContinuousConvMode = DISABLE;
+  ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_T2_CC2;
   ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
   ADC_InitStructure.ADC_NbrOfChannel = 1;
   ADC_Init(ADC2, &ADC_InitStructure);
+
   ADC_RegularChannelConfig(ADC2, ADC_Channel_17, 1, ADC_SampleTime_239Cycles5);
-   
-  ADC_Cmd(ADC1, ENABLE); 
-  ADC_TempSensorVrefintCmd(ENABLE);
-    
+  ADC_ExternalTrigConvCmd(ADC2, ENABLE);  // 使能外部触发转换模式
+
+  ADC_Cmd(ADC1, ENABLE);
   ADC_ResetCalibration(ADC1);
   while(ADC_GetResetCalibrationStatus(ADC1));
   ADC_StartCalibration(ADC1);
@@ -94,6 +146,8 @@ void ADCInit( void )
   while(ADC_GetResetCalibrationStatus(ADC2));
   ADC_StartCalibration(ADC2);
   while(ADC_GetCalibrationStatus(ADC2));
+
+  ADC_ExternalTrigConvCmd(ADC1, ENABLE);
 }
 
 /*******************************************************************************

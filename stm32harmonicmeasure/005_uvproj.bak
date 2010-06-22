@@ -46,7 +46,7 @@
           <OutputName>005</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>1</CreateHexFile>
+          <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath>.\listing\</ListingPath>
@@ -159,9 +159,9 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4096</DriverSelection>
+            <DriverSelection>4098</DriverSelection>
           </Flash1>
-          <Flash2>BIN\UL2CM3.DLL</Flash2>
+          <Flash2>Segger\JL2CM3.dll</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
         </Utilities>
@@ -207,7 +207,7 @@
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <RoSelD>3</RoSelD>
@@ -405,6 +405,11 @@
               <FileType>1</FileType>
               <FilePath>.\main.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f10x_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\stm32f10x_it.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -549,6 +554,31 @@
               <FileName>cr4_fft_256_stm32.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\STM32F10x_DSP_Lib\src\asm\arm\cr4_fft_256_stm32.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>driver</GroupName>
+          <Files>
+            <File>
+              <FileName>adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\driver\adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\driver\led.c</FilePath>
+            </File>
+            <File>
+              <FileName>rcc_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\driver\rcc_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>RS485.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\driver\RS485.c</FilePath>
             </File>
           </Files>
         </Group>
