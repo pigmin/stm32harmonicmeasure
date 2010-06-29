@@ -572,10 +572,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>47</ColumnNumber>
+      <ColumnNumber>40</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>187</TopLine>
-      <CurrentLine>187</CurrentLine>
+      <CurrentLine>196</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_tim.c</PathWithFileName>
       <FilenameWithoutPath>stm32f10x_tim.c</FilenameWithoutPath>
@@ -656,10 +656,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>76</ColumnNumber>
+      <ColumnNumber>41</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>106</TopLine>
-      <CurrentLine>106</CurrentLine>
+      <TopLine>117</TopLine>
+      <CurrentLine>142</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\driver\adc.c</PathWithFileName>
       <FilenameWithoutPath>adc.c</FilenameWithoutPath>
@@ -757,8 +757,8 @@
 
   <AlienFiles>
     <PathWithFilename>F:\MDKProj\stm32harmonicmeasure\driver\adc.h</PathWithFilename>
-    <TopLine>9</TopLine>
-    <CurrentLine>9</CurrentLine>
+    <TopLine>11</TopLine>
+    <CurrentLine>39</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -2132,15 +2132,15 @@
         </Doc>
         <Doc>
           <Name>.\driver\adc.c</Name>
-          <ColumnNumber>76</ColumnNumber>
-          <TopLine>106</TopLine>
-          <CurrentLine>106</CurrentLine>
+          <ColumnNumber>41</ColumnNumber>
+          <TopLine>117</TopLine>
+          <CurrentLine>142</CurrentLine>
         </Doc>
         <Doc>
           <Name>driver\adc.h</Name>
-          <ColumnNumber>50</ColumnNumber>
-          <TopLine>9</TopLine>
-          <CurrentLine>9</CurrentLine>
+          <ColumnNumber>21</ColumnNumber>
+          <TopLine>11</TopLine>
+          <CurrentLine>39</CurrentLine>
         </Doc>
         <Doc>
           <Name>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_adc.c</Name>
@@ -2150,9 +2150,9 @@
         </Doc>
         <Doc>
           <Name>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_tim.c</Name>
-          <ColumnNumber>47</ColumnNumber>
+          <ColumnNumber>40</ColumnNumber>
           <TopLine>187</TopLine>
-          <CurrentLine>187</CurrentLine>
+          <CurrentLine>196</CurrentLine>
         </Doc>
         <Doc>
           <Name>D:\Keil\ARM\INC\ST\STM32F10x\stm32f10x_tim.h</Name>

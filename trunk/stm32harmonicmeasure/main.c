@@ -25,6 +25,7 @@
 #include "RS485.h"
 #include "led.h"
 #include "adc.h"
+#include "timer.h"
 
 #define ADC1_DR_Address    ((u32)0x4001244C)
 ADC_InitTypeDef ADC_InitStructure;
@@ -45,21 +46,22 @@ int main()
   NVIC_Configuration();
   Led_init();
   RS485_Configuration(115200,USART_Parity_Even);
+  
   ADCInit();
-  ADC_TempSensorVrefintCmd(ENABLE);
+  
+  TIM2Init(5000,256);
 
   while(1)
   {
-    if(counter++>8000)
+    if(counter++>80000)
     {
       pos=1-pos;counter=0;
-
 	  Temp	= GetTemp(ADCConvertedValue[0]);
 	  while(USART_GetFlagStatus(USART1,USART_FLAG_TXE)==RESET);
 	  printf("%d\r\n",ADCConvertedValue[0]);
     }
-    if(pos) {Led_On(0);Led_Off(1);}
-    else    {Led_Off(0);Led_On(1);}    
+    if(pos) {Led_Off(1);}
+    else    {Led_On(1);}    
   }
 
 
