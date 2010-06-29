@@ -16,6 +16,7 @@
 *******************************************************************************/
 
 /* Includes ------------------------------------------------------------------*/
+
 #include "stm32f10x_it.h"
 
 /* Private typedef -----------------------------------------------------------*/
@@ -275,8 +276,19 @@ void EXTI4_IRQHandler(void)
 *******************************************************************************/
 void DMA1_Channel1_IRQHandler(void)
 {
-  vu32 i=0;
-  i=1;
+  static u8 On=0;
+
+
+  On  = 1-On;
+  if(On)
+  {
+  GPIO_ResetBits(GPIOD, GPIO_Pin_8);
+  }
+  else
+  {
+  GPIO_SetBits(GPIOD, GPIO_Pin_8);
+  }
+  DMA_ClearFlag(DMA1_FLAG_TC1);
 }
 
 /*******************************************************************************
@@ -354,6 +366,19 @@ void DMA1_Channel7_IRQHandler(void)
 *******************************************************************************/
 void ADC1_2_IRQHandler(void)
 {
+  static u8 On=0;
+
+
+  On  = 1-On;
+  if(On)
+  {
+  GPIO_ResetBits(GPIOD, GPIO_Pin_8);
+  }
+  else
+  {
+  GPIO_SetBits(GPIOD, GPIO_Pin_8);
+  }
+  ADC_ClearFlag(ADC1,ADC_FLAG_EOC);
 }
 
 /*******************************************************************************
@@ -468,8 +493,19 @@ void TIM1_CC_IRQHandler(void)
 *******************************************************************************/
 void TIM2_IRQHandler(void)
 {
-  vu32 timer=0;
-  timer++;
+  static u8 On=0;
+
+  //if(TIM_GetITStatus(TIM2,TIM_IT_Update) != RESET)
+  On  = 1-On;
+  if(On)
+  {
+  GPIO_ResetBits(GPIOD, GPIO_Pin_7);
+  }
+  else
+  {
+  GPIO_SetBits(GPIOD, GPIO_Pin_7);
+  }
+  TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
 
 }
 
