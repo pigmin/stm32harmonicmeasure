@@ -18,7 +18,7 @@
 /* Includes ------------------------------------------------------------------*/
 
 #include "stm32f10x_it.h"
-
+#include "adc.h"
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -28,6 +28,10 @@ u8	cRxBuffer[200];
 u8	nTxCounter=0;
 u8	nRxCounter=0;
 u8  nGotData=0;
+
+extern vu32 ADC_DualConvertedValueTab[ADC_CHANNEL_NUM];
+vu32  ADC_Value[ADC_CHANNEL_NUM];
+vu8 flag_adcover=0;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
@@ -276,19 +280,17 @@ void EXTI4_IRQHandler(void)
 *******************************************************************************/
 void DMA1_Channel1_IRQHandler(void)
 {
-  static u8 On=0;
-
-
-  On  = 1-On;
-  if(On)
+  u32 i=0;
+  TIM_Cmd(TIM2, DISABLE);
+  if(DMA_GetFlagStatus(DMA1_FLAG_TC1) != RESET)
   {
-  GPIO_ResetBits(GPIOD, GPIO_Pin_8);
+    for(i=0;i<ADC_CHANNEL_NUM;i++)
+    {
+      ADC_Value[i]  = ADC_DualConvertedValueTab[i];
+    }
+    flag_adcover=1;
+    DMA_ClearITPendingBit(DMA1_FLAG_TC1);
   }
-  else
-  {
-  GPIO_SetBits(GPIOD, GPIO_Pin_8);
-  }
-  DMA_ClearFlag(DMA1_FLAG_TC1);
 }
 
 /*******************************************************************************
@@ -366,19 +368,6 @@ void DMA1_Channel7_IRQHandler(void)
 *******************************************************************************/
 void ADC1_2_IRQHandler(void)
 {
-  static u8 On=0;
-
-
-  On  = 1-On;
-  if(On)
-  {
-  GPIO_ResetBits(GPIOD, GPIO_Pin_8);
-  }
-  else
-  {
-  GPIO_SetBits(GPIOD, GPIO_Pin_8);
-  }
-  ADC_ClearFlag(ADC1,ADC_FLAG_EOC);
 }
 
 /*******************************************************************************
@@ -495,17 +484,19 @@ void TIM2_IRQHandler(void)
 {
   static u8 On=0;
 
-  //if(TIM_GetITStatus(TIM2,TIM_IT_Update) != RESET)
-  On  = 1-On;
-  if(On)
+  if(TIM_GetITStatus(TIM2,TIM_IT_Update) != RESET)
   {
-  GPIO_ResetBits(GPIOD, GPIO_Pin_7);
-  }
-  else
-  {
-  GPIO_SetBits(GPIOD, GPIO_Pin_7);
-  }
-  TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
+    On  = 1-On;
+    if(On)
+    {
+    GPIO_ResetBits(GPIOD, GPIO_Pin_7);
+    }
+    else
+    {
+    GPIO_SetBits(GPIOD, GPIO_Pin_7);
+    }
+    TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
+   }
 
 }
 

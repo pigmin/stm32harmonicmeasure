@@ -343,7 +343,7 @@
             <uThumb>0</uThumb>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define></Define>
+              <Define>VECT_TAB_FLASH</Define>
               <Undefine></Undefine>
               <IncludePath>D:\Keil\ARM\INC\ST\STM32F10x;.\driver;..\005;.\STM32F10x_DSP_Lib\inc</IncludePath>
             </VariousControls>

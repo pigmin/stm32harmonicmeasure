@@ -318,7 +318,7 @@
               <OCR_RVCT9>
                 <Type>0</Type>
                 <StartAddress>0x20000000</StartAddress>
-                <Size>0x5000</Size>
+                <Size>0x40000</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
@@ -345,7 +345,7 @@
               <MiscControls></MiscControls>
               <Define>VECT_TAB_FLASH</Define>
               <Undefine></Undefine>
-              <IncludePath>D:\Keil\ARM\INC\ST\STM32F10x;.\driver;..\005;.\STM32F10x_DSP_Lib\inc</IncludePath>
+              <IncludePath>D:\Keil\ARM\INC\ST\STM32F10x;.\driver;..\stm32harmonicmeasure;.\STM32F10x_DSP_Lib\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -386,14 +386,14 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>STM32F10x.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\STM32F10x.s</FilePath>
-            </File>
-            <File>
               <FileName>cortexm3_macro.s</FileName>
               <FileType>2</FileType>
               <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\cortexm3_macro.s</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_vector.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\stm32f10x_vector.s</FilePath>
             </File>
           </Files>
         </Group>
@@ -416,39 +416,9 @@
           <GroupName>FWLib</GroupName>
           <Files>
             <File>
-              <FileName>stm32f10x_wwdg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_wwdg.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f10x_adc.c</FileName>
               <FileType>1</FileType>
               <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_adc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f10x_bkp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_bkp.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f10x_can.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_can.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f10x_crc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_crc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f10x_dac.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_dac.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f10x_dbgmcu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_dbgmcu.c</FilePath>
             </File>
             <File>
               <FileName>stm32f10x_dma.c</FileName>
@@ -456,34 +426,9 @@
               <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_dma.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f10x_exti.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_exti.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f10x_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f10x_fsmc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_fsmc.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f10x_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f10x_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f10x_iwdg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_iwdg.c</FilePath>
             </File>
             <File>
               <FileName>stm32f10x_lib.c</FileName>
@@ -496,34 +441,9 @@
               <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_nvic.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f10x_pwr.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_pwr.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f10x_rcc.c</FileName>
               <FileType>1</FileType>
               <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_rcc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f10x_rtc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_rtc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f10x_sdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_sdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f10x_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f10x_systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_systick.c</FilePath>
             </File>
             <File>
               <FileName>stm32f10x_tim.c</FileName>
@@ -534,6 +454,11 @@
               <FileName>stm32f10x_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>D:\Keil\ARM\RV31\LIB\ST\STM32F10x\stm32f10x_flash.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -579,6 +504,11 @@
               <FileName>RS485.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\driver\RS485.c</FilePath>
+            </File>
+            <File>
+              <FileName>timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\driver\timer.c</FilePath>
             </File>
           </Files>
         </Group>
