@@ -30,8 +30,9 @@
 #define ADC1_DR_Address    ((u32)0x4001244C)
 ADC_InitTypeDef ADC_InitStructure;
 DMA_InitTypeDef DMA_InitStructure;
-u32 ADCConvertedValue[1024];
 
+extern vu32  ADC_Value[ADC_CHANNEL_NUM];
+extern vu8 flag_adcover;
 u32 counter=0;
 u8 pos=0;
 
@@ -49,19 +50,24 @@ int main()
   
   ADCInit();
   
-  TIM2Init(5000,256);
+  TIM2Init(5000,1024);
 
   while(1)
   {
-    if(counter++>80000)
+    if(flag_adcover==1)
     {
-      pos=1-pos;counter=0;
-	  Temp	= GetTemp(ADCConvertedValue[0]);
-	  while(USART_GetFlagStatus(USART1,USART_FLAG_TXE)==RESET);
-	  printf("%d\r\n",ADCConvertedValue[0]);
+      flag_adcover  = 0;
+//      printf("!\r\n");
+      for(counter=0;counter<ADC_CHANNEL_NUM;counter++)
+      {
+        printf("%d\t%d\n",ADC_Value[counter]>>16,ADC_Value[counter]&0xFFFF);
+      }
+
+      // LED indicator
+      pos=1-pos;
+      if(pos) {Led_Off(1);}
+      else    {Led_On(1);}
     }
-    if(pos) {Led_Off(1);}
-    else    {Led_On(1);}    
   }
 
 

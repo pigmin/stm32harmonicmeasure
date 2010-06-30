@@ -32,7 +32,7 @@
 void  TIM2Init(u32 frequency,u32 dotspercycle)
 {
   TIM_TimeBaseInitTypeDef   TIM_TimeBaseStructure;
-  //TIM_OCInitTypeDef         TIM_OCInitStructure;
+  TIM_OCInitTypeDef         TIM_OCInitStructure;
   NVIC_InitTypeDef NVIC_InitStructure;
 
   NVIC_InitStructure.NVIC_IRQChannel  = TIM2_IRQChannel;
@@ -42,7 +42,7 @@ void  TIM2Init(u32 frequency,u32 dotspercycle)
   NVIC_Init(&NVIC_InitStructure);
 
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
-//  TIM_OCInitTypeDef     TIM_OCInitStructure;
+
   TIM_Cmd(TIM2, DISABLE);//先停止TIM2时钟，以准备下面的设置
 
   if(frequency == 0 ) frequency = 5000;//50Hz
@@ -59,13 +59,13 @@ void  TIM2Init(u32 frequency,u32 dotspercycle)
   TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
   TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
   /* TIM_OCMode_Toggle Mode configuration: Channel2 */
-//  TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_Toggle;
-//  TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-//  TIM_OCInitStructure.TIM_Pulse = 10;
-//  TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_Low;
-//  TIM_OC2Init(TIM2, &TIM_OCInitStructure);
-//
-//  TIM_OC2PreloadConfig(TIM2, TIM_OCPreload_Enable);
+  TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_Toggle;
+  TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+  TIM_OCInitStructure.TIM_Pulse = 10;
+  TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_Low;
+  TIM_OC2Init(TIM2, &TIM_OCInitStructure);
+
+  TIM_OC2PreloadConfig(TIM2, TIM_OCPreload_Enable);
 
     //预先清除所有中断位防止一启用就有中断/
   TIM_ClearITPendingBit(TIM2, TIM_IT_Update);

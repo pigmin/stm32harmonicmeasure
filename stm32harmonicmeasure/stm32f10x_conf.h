@@ -32,22 +32,22 @@
 #define _ADC
 #define _ADC1
 #define _ADC2
-#define _ADC3
+//#define _ADC3
 
 /************************************* BKP ************************************/
-#define _BKP 
+//#define _BKP 
 
 /************************************* CAN ************************************/
-#define _CAN
+//#define _CAN
 
 /************************************* CRC ************************************/
-#define _CRC
+//#define _CRC
 
 /************************************* DAC ************************************/
-#define _DAC
+//#define _DAC
 
 /************************************* DBGMCU *********************************/
-#define _DBGMCU
+//#define _DBGMCU
 
 /************************************* DMA ************************************/
 #define _DMA
@@ -65,17 +65,17 @@
 #define _DMA2_Channel5
 
 /************************************* EXTI ***********************************/
-#define _EXTI
+//#define _EXTI
 
 /************************************* FLASH and Option Bytes *****************/
 #define _FLASH
 /* Uncomment the line below to enable FLASH program/erase/protections functions,
    otherwise only FLASH configuration (latency, prefetch, half cycle) functions
    are enabled */
-#define _FLASH_PROG
+//#define _FLASH_PROG
 
 /************************************* FSMC ***********************************/
-#define _FSMC
+//#define _FSMC
 
 /************************************* GPIO ***********************************/
 #define _GPIO
@@ -89,18 +89,18 @@
 #define _AFIO
 
 /************************************* I2C ************************************/
-#define _I2C
-#define _I2C1
-#define _I2C2
+//#define _I2C
+//#define _I2C1
+//#define _I2C2
 
 /************************************* IWDG ***********************************/
-#define _IWDG
+//#define _IWDG
 
 /************************************* NVIC ***********************************/
 #define _NVIC
 
 /************************************* PWR ************************************/
-#define _PWR
+//#define _PWR
 
 /************************************* RCC ************************************/
 #define _RCC
@@ -109,13 +109,13 @@
 #define _RTC
 
 /************************************* SDIO ***********************************/
-#define _SDIO
+//#define _SDIO
 
 /************************************* SPI ************************************/
-#define _SPI
-#define _SPI1
-#define _SPI2
-#define _SPI3
+//#define _SPI
+//#define _SPI1
+//#define _SPI2
+//#define _SPI3
 
 /************************************* SysTick ********************************/
 #define _SysTick
@@ -134,13 +134,13 @@
 /************************************* USART **********************************/
 #define _USART
 #define _USART1
-#define _USART2
-#define _USART3
-#define _UART4
-#define _UART5
+//#define _USART2
+//#define _USART3
+//#define _UART4
+//#define _UART5
 
 /************************************* WWDG ***********************************/
-#define _WWDG
+//#define _WWDG
 
 /* In the following line adjust the value of External High Speed oscillator (HSE)
    used in your application */

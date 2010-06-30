@@ -21,7 +21,7 @@
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
-#define ADC_CHANNEL_NUM     1
+#define ADC_CHANNEL_NUM     1024
 
 #define ADC_PT100_A         0     // X8
 #define ADC_PT100_B         1     // X9
