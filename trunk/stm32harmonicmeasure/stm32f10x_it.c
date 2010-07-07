@@ -281,7 +281,6 @@ void EXTI4_IRQHandler(void)
 void DMA1_Channel1_IRQHandler(void)
 {
   u32 i=0;
-  TIM_Cmd(TIM2, DISABLE);
   if(DMA_GetFlagStatus(DMA1_FLAG_TC1) != RESET)
   {
     for(i=0;i<ADC_CHANNEL_NUM;i++)
@@ -290,6 +289,7 @@ void DMA1_Channel1_IRQHandler(void)
     }
     flag_adcover=1;
     DMA_ClearITPendingBit(DMA1_FLAG_TC1);
+    GPIOD->ODR ^= ((u32)1<<6);
   }
 }
 
@@ -482,21 +482,20 @@ void TIM1_CC_IRQHandler(void)
 *******************************************************************************/
 void TIM2_IRQHandler(void)
 {
-  static u8 On=0;
-
+  u16 capture;
   if(TIM_GetITStatus(TIM2,TIM_IT_Update) != RESET)
   {
-    On  = 1-On;
-    if(On)
-    {
-    GPIO_ResetBits(GPIOD, GPIO_Pin_7);
-    }
-    else
-    {
-    GPIO_SetBits(GPIOD, GPIO_Pin_7);
-    }
+    GPIOD->ODR ^= ((u32)1<<7);
     TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
-   }
+  }
+
+  if(TIM_GetITStatus(TIM2,TIM_IT_CC2) != RESET)
+  {
+    //GPIOD->ODR ^= ((u32)1<<7);
+    TIM_ClearITPendingBit(TIM2,TIM_IT_CC2);
+    capture = TIM_GetCapture2(TIM2);
+    TIM_SetCounter(TIM2,0);
+  }
 
 }
 

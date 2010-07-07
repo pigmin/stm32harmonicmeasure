@@ -25,7 +25,7 @@
 void Led_init(void);
 void Led_On(u8 num);
 void Led_Off(u8 num);
-
+void Led_Flash(u8 num);
 #endif /*__LED_H */
 
 /* End of file ---------------------------------------------------------------*/

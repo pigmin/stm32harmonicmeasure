@@ -81,17 +81,17 @@ void  DMA1_Init(void)
 void ADCInit( void )
 {
   ADC_InitTypeDef ADC_InitStructure;
-//  NVIC_InitTypeDef NVIC_InitStructure;
+  NVIC_InitTypeDef NVIC_InitStructure;
 
   DMA1_Init();
   ADCPin_Init();
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB2Periph_ADC1 | RCC_APB2Periph_ADC2, ENABLE);
 
-//  NVIC_InitStructure.NVIC_IRQChannel  = ADC1_2_IRQChannel;
-//  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=0;
-//  NVIC_InitStructure.NVIC_IRQChannelSubPriority=0;
-//  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-//  NVIC_Init(&NVIC_InitStructure);
+  NVIC_InitStructure.NVIC_IRQChannel  = ADC1_2_IRQChannel;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=0;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority=0;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&NVIC_InitStructure);
 
   /* ADC1 Configuration ------------------------------------------------------*/
   ADC_InitStructure.ADC_Mode = ADC_Mode_RegSimult;
@@ -135,9 +135,12 @@ void ADCInit( void )
   
 
   ADC_ExternalTrigConvCmd(ADC1, ENABLE);
+
+  //ADC_ITConfig(ADC1,ADC_IT_EOC,ENABLE);
   
   //ADC_SoftwareStartConvCmd(ADC1, ENABLE);
   //ADC_SoftwareStartConvCmd(ADC2, ENABLE);
+
 }
 
 /*******************************************************************************
