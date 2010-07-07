@@ -57,11 +57,11 @@ void Led_On(u8 num)
   switch(num)
   {
     case 0:
-      GPIO_ResetBits(GPIOD, GPIO_Pin_7);
+      GPIO_ResetBits(GPIOD, GPIO_Pin_7);//LED515,LED0
       break;
       
     case 1:
-      GPIO_ResetBits(GPIOD, GPIO_Pin_6);
+      GPIO_ResetBits(GPIOD, GPIO_Pin_6);//LED516,LED1
       break;
       
     default:
@@ -87,6 +87,31 @@ void Led_Off(u8 num)
       
     case 1:
       GPIO_SetBits(GPIOD, GPIO_Pin_6);
+      break;
+      
+    default:
+      break;
+  }
+}
+
+/*******************************************************************************
+* Function Name  : Led_Flash
+* Description    : 
+* Input          : to flash the LED
+*                  - 
+* Output         : None
+* Return         : None
+*******************************************************************************/
+void Led_Flash(u8 num)
+{
+  switch(num)
+  {
+    case 0:
+      GPIOD->ODR ^= ((u32)1<<7);
+      break;
+      
+    case 1:
+      GPIOD->ODR ^= ((u32)1<<6);
       break;
       
     default:

@@ -47,26 +47,26 @@ void RCC_Configuration(void)
   
     if(HSEStartUpStatus == SUCCESS)
     {
-      /* Enable Prefetch Buffer */
+      /* Enable Prefetch Buffer (预取指缓存)*/
       FLASH_PrefetchBufferCmd(FLASH_PrefetchBuffer_Enable);
   
-      /* Flash 2 wait state */
+      /* Flash 2 wait state (FLASH存储器延时始终)*/
       FLASH_SetLatency(FLASH_Latency_2);
    	
-      /* HCLK = SYSCLK */
+      /* HCLK = SYSCLK (AHB时钟)*/
       RCC_HCLKConfig(RCC_SYSCLK_Div1); 
     
-      /* PCLK2 = HCLK */
+      /* PCLK2 = HCLK (APB2时钟)*/
       RCC_PCLK2Config(RCC_HCLK_Div1); 
   
-      /* PCLK1 = HCLK/2 */
+      /* PCLK1 = HCLK/2 (APB时钟)*/
       RCC_PCLK1Config(RCC_HCLK_Div2);
 
-      /* ADCCLK = PCLK2/8 */
+      /* ADCCLK = PCLK2/8 ()*/
       RCC_ADCCLKConfig(RCC_PCLK2_Div8); 
       
-      /* PLLCLK = 8MHz * 8 = 64 MHz */
-      RCC_PLLConfig(RCC_PLLSource_HSE_Div1, RCC_PLLMul_8);
+      /* PLLCLK = 8MHz * 7 = 56 MHz */
+      RCC_PLLConfig(RCC_PLLSource_HSE_Div1, RCC_PLLMul_7);
   
       /* Enable PLL */ 
       RCC_PLLCmd(ENABLE);
@@ -89,6 +89,8 @@ void RCC_Configuration(void)
   /* Enable GPIOA, GPIOC and AFIO clock */
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOB | RCC_APB2Periph_GPIOD | RCC_APB2Periph_GPIOE | RCC_APB2Periph_USART1 | RCC_APB2Periph_AFIO, ENABLE);
   //RCC_APB1PeriphClockCmd(RCC_APB1Periph_CAN, ENABLE);  
+  //RCC_APB2PeriphClockCmd(RCC_APB2Periph_ALL,ENABLE);
+  //RCC_APB1PeriphClockCmd(RCC_APB1Periph_ALL, ENABLE);
 }
 
 /* End of file ---------------------------------------------------------------*/

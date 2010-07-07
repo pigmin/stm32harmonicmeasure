@@ -34,7 +34,6 @@ DMA_InitTypeDef DMA_InitStructure;
 extern vu32  ADC_Value[ADC_CHANNEL_NUM];
 extern vu8 flag_adcover;
 u32 counter=0;
-u8 pos=0;
 
 u32 ltemp=0;
 s16 Temp=0;
@@ -46,7 +45,7 @@ int main()
   RCC_Configuration();
   NVIC_Configuration();
   Led_init();
-  RS485_Configuration(115200,USART_Parity_Even);
+  //RS485_Configuration(115200,USART_Parity_Even);
   
   ADCInit();
   
@@ -62,11 +61,7 @@ int main()
       {
         printf("%d\t%d\n",ADC_Value[counter]>>16,ADC_Value[counter]&0xFFFF);
       }
-
-      // LED indicator
-      pos=1-pos;
-      if(pos) {Led_Off(1);}
-      else    {Led_On(1);}
+      //GPIOD->ODR ^= ((u32)1<<6);
     }
   }
 

@@ -35,7 +35,15 @@ void  TIM2Init(u32 frequency,u32 dotspercycle)
   TIM_OCInitTypeDef         TIM_OCInitStructure;
   NVIC_InitTypeDef NVIC_InitStructure;
 
-  NVIC_InitStructure.NVIC_IRQChannel  = TIM2_IRQChannel;
+//  GPIO_InitTypeDef GPIO_InitStructure;
+
+  /* Configure TIM1_CH4 (PA11) as alternate function push-pull */
+//  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8|GPIO_Pin_9|GPIO_Pin_10|GPIO_Pin_11;
+//  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+//  GPIO_Init(GPIOA, &GPIO_InitStructure);
+
+  NVIC_InitStructure.NVIC_IRQChannel  = TIM2_IRQChannel;//TIM1_CC_IRQChannel;
   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=0;
   NVIC_InitStructure.NVIC_IRQChannelSubPriority=1;
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
@@ -53,27 +61,47 @@ void  TIM2Init(u32 frequency,u32 dotspercycle)
   2.
   ----------------------------------------------------------------------- */
   /* Time base configuration */
-  TIM_TimeBaseStructure.TIM_Period = 1000; //计数值
-  TIM_TimeBaseStructure.TIM_Prescaler = 35999; //预分频,此值+1,时钟滴答为72/72M=1us
+  TIM_TimeBaseStructInit(&TIM_TimeBaseStructure);
+  TIM_TimeBaseStructure.TIM_Period = 0xffff; //计数值
+  TIM_TimeBaseStructure.TIM_Prescaler = 55; //预分频,此值+1,时钟滴答为56/56M=0.001ms=1us
   TIM_TimeBaseStructure.TIM_ClockDivision = 0;//时钟分割
   TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
   TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
+
   /* TIM_OCMode_Toggle Mode configuration: Channel2 */
   TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_Toggle;
   TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-  TIM_OCInitStructure.TIM_Pulse = 10;
+  TIM_OCInitStructure.TIM_Pulse = 5000;     //0.5ms
   TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_Low;
   TIM_OC2Init(TIM2, &TIM_OCInitStructure);
+  //TIM_ARRPreloadConfig(TIM2,ENABLE);
 
-  TIM_OC2PreloadConfig(TIM2, TIM_OCPreload_Enable);
-
+//  TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+//  TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+//  TIM_OCInitStructure.TIM_Pulse = 200;
+//  TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_Low;
+//  TIM_OC2Init(TIM1, &TIM_OCInitStructure);
+//
+//  TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+//  TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+//  TIM_OCInitStructure.TIM_Pulse = 300;
+//  TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_Low;
+//  TIM_OC3Init(TIM1, &TIM_OCInitStructure);
+//
+//  TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+//  TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+//  TIM_OCInitStructure.TIM_Pulse = 400;
+//  TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+//  TIM_OC4Init(TIM1, &TIM_OCInitStructure);
+  
     //预先清除所有中断位防止一启用就有中断/
-  TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+  TIM_ClearITPendingBit(TIM2, TIM_IT_Update|TIM_IT_CC2);
 
   //4个通道和溢出都配置中断/
-  TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
+  TIM_ITConfig(TIM2, TIM_IT_Update|TIM_IT_CC2, ENABLE);
   /*---------------------------------------*/
-  //TIM_ARRPreloadConfig(TIM2, ENABLE);
+  /* TIM1 main Output Enable */
+  //TIM_CtrlPWMOutputs(TIM1, ENABLE);
   /* TIM2 enable counter */
   TIM_Cmd(TIM2, ENABLE);
 }
